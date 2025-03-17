@@ -1,0 +1,12 @@
+spring :
+  datasource:
+    url: jdbc:mysql://localhost:3306/testing
+    username: root
+    password: 1234
+  jpa :
+    show-sql: true
+    hibernate :
+      ddl-auto : create
+logging:
+  level:
+    org.springframework.security: trace
