@@ -26,8 +26,8 @@ public class AuthServiceImp implements AuthService {
             UserEntity newAdminAccount = new UserEntity();
             newAdminAccount.setName("ADMIN");
             newAdminAccount.setRoles(UserRoles.ADMIN);
-            newAdminAccount.setEmail("ruvindusharadaha22@gmail.com");
-            newAdminAccount.setPassword(passwordEncoder.encode("12345")); // Encode the password
+            newAdminAccount.setEmail("ht['");
+            newAdminAccount.setPassword(passwordEncoder.encode("12345678")); // Encode the password
             userRepository.save(newAdminAccount);
             System.out.println("Admin account created successfully.");
         } else {

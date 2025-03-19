@@ -1,4 +1,4 @@
-package org.example.repository.admin;
+package org.example.service.jwt.admin;
 
 import lombok.RequiredArgsConstructor;
 import org.example.dto.Car;
@@ -17,8 +17,9 @@ public class AdminImpl implements AdminService{
     @Override
 
 
-    public CarEntity addCar(Car car) {
-     CarEntity carEntity=modelMapper.map(car, CarEntity.class);
-        return carRepository.save(carEntity);
+   public void addCar(Car car) {
+        carRepository.save(modelMapper.map(car, CarEntity.class));
+
+
     }
 }

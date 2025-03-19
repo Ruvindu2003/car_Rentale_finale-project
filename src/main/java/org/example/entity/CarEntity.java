@@ -25,8 +25,7 @@ public class CarEntity {
     private Date  moddleDate;
     private String description;
     private Double price;
-    @Column(columnDefinition = "longblob")
-    private  byte[] image;
+    private String image;
 
 
 

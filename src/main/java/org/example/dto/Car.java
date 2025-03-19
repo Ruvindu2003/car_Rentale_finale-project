@@ -20,8 +20,7 @@ public class Car {
     private Date moddleDate;
     private String description;
     private Double price;
-    private MultipartFile image;
-    private byte[] returnImage;
+    private String image;
 
 
 }

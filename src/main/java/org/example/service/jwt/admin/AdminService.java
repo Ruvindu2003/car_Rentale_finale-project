@@ -1,9 +1,9 @@
-package org.example.repository.admin;
+package org.example.service.jwt.admin;
 
 import org.example.dto.Car;
 import org.example.entity.CarEntity;
 
 public interface AdminService {
 
-    CarEntity addCar(Car car);
+    void addCar(Car car);
 }
