@@ -7,6 +7,8 @@ import org.example.service.jwt.admin.AdminService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RestController
 @RequestMapping("api/admin")
@@ -22,6 +24,17 @@ public class AdminController {
     @PostMapping("/car")
     public void addCar(@RequestBody Car car) {
         adminService.addCar(car);
+    }
+
+    @GetMapping("/getAll")
+    public List<Car> getAll(){
+       return adminService.getAll();
+    }
+
+    @DeleteMapping("/Delete/{id}")
+    public void delete(@PathVariable Long id){
+        adminService.deleteById(id);
+
     }
 
 }
