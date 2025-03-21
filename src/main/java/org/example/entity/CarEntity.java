@@ -22,9 +22,9 @@ public class CarEntity {
     private String tramsmisson;
     private String brand;
     private String type;
-    private Date  moddleDate;
+    private String  modelDate;
     private String description;
-    private Double price;
+    private String price;
     private String image;
 
 

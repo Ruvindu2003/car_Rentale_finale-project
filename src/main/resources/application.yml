@@ -10,3 +10,9 @@ spring :
 logging:
   level:
     org.springframework.security: trace
+
+cloudinary:
+  cloud-name: dp7yogyps
+  api-key: 571934253417438
+  api-secret: yozTlFoNdn_dbKM9PuNi4aOhY2c
+

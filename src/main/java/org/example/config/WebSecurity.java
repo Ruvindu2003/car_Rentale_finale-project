@@ -6,7 +6,6 @@ import org.example.repository.UserRepository;
 import org.example.service.jwt.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -39,14 +38,15 @@ public class WebSecurity {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/auth/signup").permitAll()
                         .requestMatchers("/api/auth/login").permitAll()
-                        .requestMatchers("api/admin/car").permitAll()
+                        .requestMatchers("/api/admin/car").permitAll()
+                        .requestMatchers("/api/images/upload").permitAll()
                         .requestMatchers("/api/admin/**").hasAnyAuthority(UserRoles.ADMIN.name())
                         .requestMatchers("/api/user/**").hasAnyAuthority(UserRoles.CUSTOMER.name())
                         .anyRequest().authenticated())
+                .csrf(csrf -> csrf.disable())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
