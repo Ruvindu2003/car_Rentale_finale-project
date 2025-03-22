@@ -46,6 +46,8 @@ public class WebSecurity {
                         .requestMatchers("/api/images/upload").permitAll()
                         .requestMatchers("/api/admin/getAll").permitAll()
                         .requestMatchers("api/admin/Delete/{id}").permitAll()
+                        .requestMatchers("/api/admin/Search-By-Id/{id}").permitAll()
+                        .requestMatchers("**").permitAll()
                         .requestMatchers("/api/admin/**").hasAnyAuthority(UserRoles.ADMIN.name())
                         .requestMatchers("/api/user/**").hasAnyAuthority(UserRoles.CUSTOMER.name())
                         .anyRequest().authenticated())

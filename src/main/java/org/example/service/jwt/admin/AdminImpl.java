@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -42,5 +43,27 @@ public class AdminImpl implements AdminService{
     @Override
     public void deleteById(Long id) {
         carRepository.deleteById(id);
+    }
+
+    @Override
+    public Car SearchByID(Long id) {
+        return modelMapper.map(carRepository.findById(id), Car.class);
+    }
+
+    @Override
+    public boolean UpdateByCar(Car car,Long id) {
+       if (car==null||id==null){
+           return  false;
+
+       }
+       Optional<CarEntity> opitonalexitingCar=carRepository.findById(id);
+       if (opitonalexitingCar.isPresent()){
+           CarEntity exsitingCar=opitonalexitingCar.get();
+           modelMapper.map(car,exsitingCar);
+           return  true;
+       }else {
+           return false;
+       }
+
     }
 }

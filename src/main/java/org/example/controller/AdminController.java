@@ -37,4 +37,14 @@ public class AdminController {
 
     }
 
+    @GetMapping("/Search-By-Id/{id}")
+    public Car searchByID(@PathVariable Long id){
+      return   adminService.SearchByID(id);
+    }
+
+    @PutMapping("/Update-By-Car/{id}")
+    public boolean UpdateByCar(@RequestBody Car car,Long id){
+       return adminService.UpdateByCar(car,id);
+
+    }
 }

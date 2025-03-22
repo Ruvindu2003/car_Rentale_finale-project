@@ -11,4 +11,6 @@ public interface AdminService {
     List<Car> getAll();
 
     void deleteById(Long id);
+    Car SearchByID(Long id);
+   boolean  UpdateByCar(Car car,Long id);
 }
