@@ -84,7 +84,7 @@ public class AuthController {
             UserEntity user = optionalUser.get();
             if (user.isEnabled()) {
                 authenticationResponse.setJwt(jwt);
-                authenticationResponse.setUserid(user.getId());
+                authenticationResponse.setUserid(userRepository.findByEmail(user.getEmail()).get().getId().toString());
                 authenticationResponse.setUserRoles(user.getRoles());
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is disabled.");
@@ -92,7 +92,6 @@ public class AuthController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
-
         return ResponseEntity.ok(authenticationResponse);
     }
 }

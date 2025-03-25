@@ -43,7 +43,7 @@ public class AdminController {
     }
 
     @PutMapping("/Update-By-Car/{id}")
-    public boolean UpdateByCar(@RequestBody Car car,Long id){
+    public boolean UpdateByCar(@RequestBody Car car,@PathVariable Long id){
        return adminService.UpdateByCar(car,id);
 
     }

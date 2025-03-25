@@ -39,7 +39,6 @@ public class WebSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests(request -> request
-
                         .requestMatchers("/api/auth/signup").permitAll()
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/admin/car").permitAll()
@@ -47,7 +46,8 @@ public class WebSecurity {
                         .requestMatchers("/api/admin/getAll").permitAll()
                         .requestMatchers("api/admin/Delete/{id}").permitAll()
                         .requestMatchers("/api/admin/Search-By-Id/{id}").permitAll()
-                        .requestMatchers("**").permitAll()
+                        .requestMatchers("/api/admin/Update-By-Car/{id}").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .requestMatchers("/api/admin/**").hasAnyAuthority(UserRoles.ADMIN.name())
                         .requestMatchers("/api/user/**").hasAnyAuthority(UserRoles.CUSTOMER.name())
                         .anyRequest().authenticated())

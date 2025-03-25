@@ -11,5 +11,5 @@ import org.example.enums.UserRoles;
 public class AuthoricationRespones {
     private String jwt;
     private UserRoles userRoles;
-    private Long userid;
+    private String userid;
 }

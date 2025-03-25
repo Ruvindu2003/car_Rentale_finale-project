@@ -59,7 +59,17 @@ public class AdminImpl implements AdminService{
        Optional<CarEntity> opitonalexitingCar=carRepository.findById(id);
        if (opitonalexitingCar.isPresent()){
            CarEntity exsitingCar=opitonalexitingCar.get();
-           modelMapper.map(car,exsitingCar);
+           exsitingCar.setName(car.getName());
+           exsitingCar.setDescription(car.getDescription());
+           exsitingCar.setType(car.getType());
+           exsitingCar.setBrand(car.getBrand());
+           exsitingCar.setImage(car.getImage());
+           exsitingCar.setTramsmisson(car.getTramsmisson());
+           exsitingCar.setColor(car.getColor());
+           exsitingCar.setModelDate(car.getModelDate());
+           exsitingCar.setPrice(car.getPrice());
+
+           carRepository.save(exsitingCar);
            return  true;
        }else {
            return false;
