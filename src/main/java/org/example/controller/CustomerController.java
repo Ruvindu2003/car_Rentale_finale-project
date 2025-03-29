@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,20 +35,27 @@ public class CustomerController {
 
     }
     @PostMapping("/Book-Car/{id}")
-    public  ResponseEntity<String> bookCar(@PathVariable Long id,@Valid @RequestBody BookACar bookACar){
+    public  ResponseEntity<Map<String, String>> bookCar(@PathVariable Long id, @Valid @RequestBody BookACar bookACar){
 
             if (id == null || bookACar == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid request: Car ID or booking details are missing");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("massage","Invalid request: Car ID or booking details are missing"));
             }
-            System.out.println(id+" "+bookACar);
             boolean isBooked = customerService.bookCar(id, bookACar);
 
             if (isBooked) {
-                return ResponseEntity.ok("Car booked successfully!");
+                return ResponseEntity.ok(Collections.singletonMap("message", "Car booked successfully!"));
             } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Car booking failed. Please check the car ID or availability.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("massage","Car booking failed. Please check the car ID or availability."));
             }
         }
+        @GetMapping("/car/booking/{userId}")
+        public ResponseEntity<?>getBooking(@PathVariable Long userId){
+        return ResponseEntity.ok(customerService.getAllBokingsInUserId(userId));
+
+
+        }
+
+
 
 
 

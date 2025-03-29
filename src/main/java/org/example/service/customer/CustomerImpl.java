@@ -3,7 +3,6 @@ package org.example.service.customer;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.BookACar;
 import org.example.dto.Car;
-import org.example.dto.User;
 import org.example.entity.BookACarEntity;
 import org.example.entity.CarEntity;
 import org.example.entity.UserEntity;
@@ -12,14 +11,14 @@ import org.example.repository.BookACarRepository;
 import org.example.repository.CarRepository;
 import org.example.repository.UserRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -48,14 +47,16 @@ public class CustomerImpl implements CustomerService{
 
     @Override
     public boolean bookCar(Long id, BookACar bookCarACar) {
-
-
-        Optional<UserEntity> optionalUserEntity=(userRepository.findById(id));
+        Optional<UserEntity> optionalUserEntity=(userRepository.findById(bookCarACar.getUserId()));
         Optional<CarEntity>optionalCarEntity=carRepository.findById(id);
         if (optionalCarEntity.isPresent() && optionalCarEntity.isPresent()){
             BookACarEntity bookaACarEntity=new BookACarEntity();
             long difMilliSecond=bookCarACar.getToDate().getTime() -bookCarACar.getFromDate().getTime();
-            long days= TimeUnit.MICROSECONDS.toDays(difMilliSecond);
+
+
+            long days = difMilliSecond / 86400000;
+
+
             bookaACarEntity.setDays(days);
             bookaACarEntity.setUser(optionalUserEntity.get());
             bookaACarEntity.setCar(optionalCarEntity.get());
@@ -69,7 +70,11 @@ public class CustomerImpl implements CustomerService{
             return  false;
     }
 
+    @Override
+    public List<BookACar> getAllBokingsInUserId(Long userId) {
 
+        return bookACarRepository.findByUserId(userId).stream().map(BookACarEntity::getBookingCars).collect(Collectors.toList());
+    }
 
 
 }

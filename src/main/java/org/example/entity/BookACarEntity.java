@@ -3,6 +3,7 @@ package org.example.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.dto.BookACar;
 import org.example.enums.BookCarStatus;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -18,8 +19,8 @@ import java.util.Date;
 @Table(name = "BookInCar")
 public class BookACarEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bookId;
     private Date fromDate;
     private Date toDate;
     private Long days;
@@ -28,7 +29,7 @@ public class BookACarEntity {
     private BookCarStatus bookCarStatus;
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name = "userid",nullable = false)
+    @JoinColumn(name = "userid")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private UserEntity user;
@@ -39,7 +40,19 @@ public class BookACarEntity {
     private CarEntity car;
 
 
+    public BookACar getBookingCars(){
+      BookACar bookACar=new BookACar();
+     bookACar.setBookId(bookId);
+     bookACar.setFromDate(fromDate);
+     bookACar.setToDate(toDate);
+     bookACar.setDays(days);
+     bookACar.setAmount(amount);
+     bookACar.setBookCarStatus(bookCarStatus);
+     bookACar.setEmail(user.getEmail());
+     bookACar.setUserName(user.getName());
 
+     return bookACar;
+    }
 
 
 
