@@ -5,6 +5,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.BookACar;
 import org.example.dto.Car;
+import org.example.dto.SearchCar;
+import org.example.entity.CarEntity;
 import org.example.service.customer.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,8 +54,15 @@ public class CustomerController {
         public ResponseEntity<?>getBooking(@PathVariable Long userId){
         return ResponseEntity.ok(customerService.getAllBokingsInUserId(userId));
 
+    }
 
+        @PostMapping("/search/car")
+       public List<Car>SearchCar(@RequestBody SearchCar searchCar){
+        List<Car> carList=customerService.SearchCar(searchCar);
+        return  carList;
         }
+
+
 
 
 

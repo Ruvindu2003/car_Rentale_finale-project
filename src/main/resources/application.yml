@@ -16,3 +16,10 @@ cloudinary:
   api-key: 571934253417438
   api-secret: yozTlFoNdn_dbKM9PuNi4aOhY2c
 
+infobip:
+  api:
+    key: "4cd10a375b74d2edf8ec12ea7e7f0f4a-ee56a346-98cd-4e00-b58b-37cd37fe3f0c"  # Replace with your actual API key from Infobip portal
+  base:
+    url: "9k3v4d.api.infobip.com"
+  whatsapp:
+    sender: "781001040"
