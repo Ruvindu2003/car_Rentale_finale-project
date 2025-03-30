@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.firewall.HttpFirewall;
 
 @Configuration
 @RequiredArgsConstructor
@@ -48,6 +49,7 @@ public class WebSecurity {
                         .requestMatchers("/api/admin/Search-By-Id/{id}").permitAll()
                         .requestMatchers("/api/admin/Update-By-Car/{id}").permitAll()
                         .requestMatchers("/**").permitAll()
+                        .requestMatchers("/api/customer/car/Search").permitAll()
                         .requestMatchers("/api/admin/**").hasAnyAuthority(UserRoles.ADMIN.name())
                         .requestMatchers("/api/user/**").hasAnyAuthority(UserRoles.CUSTOMER.name())
                         .anyRequest().authenticated())
@@ -74,5 +76,8 @@ public class WebSecurity {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
+    }
+
+    public void httpFirewall(HttpFirewall httpFirewall) {
     }
 }
