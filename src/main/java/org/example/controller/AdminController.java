@@ -61,11 +61,12 @@ public class AdminController {
 
         }
 
-        @PostMapping("search/car")
-    public ResponseEntity<?> searcByCar(SearchCar searchCar){
-        return  ResponseEntity.ok(adminService.searchCar(searchCar));
 
-        }
+    @PostMapping("/search/car")
+    public List<Car> searchCars(@RequestBody SearchCar searchCar) {
+        List<Car> cars = adminService.searchCar(searchCar);
+        return cars;
+    }
 
 
 

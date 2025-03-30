@@ -3,7 +3,6 @@ package org.example.service.jwt.admin;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.BookACar;
 import org.example.dto.Car;
-import org.example.dto.CarList;
 import org.example.dto.SearchCar;
 import org.example.entity.BookACarEntity;
 import org.example.entity.CarEntity;
@@ -13,7 +12,6 @@ import org.example.repository.CarRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -110,39 +108,23 @@ public class AdminImpl implements AdminService {
         }
         return false;
     }
+@Override
+    public List<Car> searchCar(SearchCar searchCar) {
+        List<CarEntity> carEntities = carRepository.findAll().stream()
+                .filter(car -> searchCar.getBrand() == null ||
+                        car.getBrand().toLowerCase().contains(searchCar.getBrand().toLowerCase()))
+                .filter(car -> searchCar.getType() == null ||
+                        car.getType().toLowerCase().contains(searchCar.getType().toLowerCase()))
+                .filter(car -> searchCar.getTramsmisson() == null ||
+                        car.getTramsmisson().toLowerCase().contains(searchCar.getTramsmisson().toLowerCase()))
+                .filter(car -> searchCar.getColor() == null ||
+                        car.getColor().toLowerCase().contains(searchCar.getColor().toLowerCase()))
+                .collect(Collectors.toList());
 
-    @Override
-    public CarList searchCar(SearchCar searchCar) {
-
-
-            CarEntity carExample = new CarEntity();
-            carExample.setBrand(searchCar.getBrand());
-            carExample.setType(searchCar.getType());
-            carExample.setTramsmisson(searchCar.getTramsmisson());
-            carExample.setColor(searchCar.getColor());
-
-
-            ExampleMatcher matcher = ExampleMatcher.matchingAll()
-                    .withMatcher("brand", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
-                    .withMatcher("type", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
-                    .withMatcher("Tramsmisson", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
-                    .withMatcher("color", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
-
-            Example<CarEntity> example = Example.of(carExample, matcher);
-
-            List<CarEntity> carEntities = carRepository.findAll(example);
-
-            List<Car> cars = carEntities.stream()
-                    .map(entity -> modelMapper.map(entity, Car.class))
-                    .collect(Collectors.toList());
-
-
-            CarList carList = new CarList();
-            carList.setCarList(cars);
-
-            return carList;
-        }
-
+        return carEntities.stream()
+                .map(entity -> modelMapper.map(entity, Car.class))
+                .collect(Collectors.toList());
+    }
 
 
     }
