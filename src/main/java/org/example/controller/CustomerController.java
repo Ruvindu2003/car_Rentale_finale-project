@@ -6,14 +6,17 @@ import lombok.RequiredArgsConstructor;
 import org.example.dto.BookACar;
 import org.example.dto.Car;
 import org.example.dto.SearchCar;
+import org.example.entity.BookACarEntity;
 import org.example.entity.CarEntity;
 import org.example.service.customer.CustomerService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +65,34 @@ public class CustomerController {
         return  carList;
         }
 
+    @GetMapping("/timeline/{carId}")
+    public ResponseEntity<?> getBookingTimeline(
+            @PathVariable Long carId,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+
+
+        if (carId == null || carId <= 0) {
+            return ResponseEntity.badRequest().body("Invalid car ID");
+        }
+
+        if (startDate == null || endDate == null) {
+            return ResponseEntity.badRequest().body("Both startDate and endDate are required");
+        }
+
+        if (startDate.after(endDate)) {
+            return ResponseEntity.badRequest().body("startDate must be before or equal to endDate");
+        }
+
+        try {
+            List<BookACarEntity> bookings = customerService.getBookingsForCarBetweenDates(carId, startDate, endDate);
+            return ResponseEntity.ok(bookings);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Error retrieving booking timeline: " + e.getMessage());
+        }
+    }
+
+        }
 
 
 
@@ -71,4 +102,6 @@ public class CustomerController {
 
 
 
-}
+
+
+

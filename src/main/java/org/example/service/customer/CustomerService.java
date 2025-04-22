@@ -5,6 +5,7 @@ import org.example.dto.Car;
 import org.example.dto.SearchCar;
 import org.example.entity.BookACarEntity;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CustomerService {
@@ -14,7 +15,5 @@ public interface CustomerService {
     boolean bookCar(Long id, BookACar bookCarACar);
     List<BookACar> getAllBokingsInUserId(Long userId);
     List<Car> SearchCar (SearchCar searchCar);
-
-
-
+    List<BookACarEntity> getBookingsForCarBetweenDates(Long carId, Date startDate, Date endDate);
 }

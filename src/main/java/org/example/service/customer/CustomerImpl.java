@@ -14,9 +14,9 @@ import org.example.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -95,7 +95,38 @@ public class CustomerImpl implements CustomerService{
                 .map(entity -> modelMapper.map(entity, Car.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<BookACarEntity> getBookingsForCarBetweenDates(Long carId, Date startDate, Date endDate) {
+
+        Calendar cal = Calendar.getInstance();
+
+
+        cal.setTime(startDate);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        Date adjustedStartDate = cal.getTime();
+
+
+        cal.setTime(endDate);
+        cal.set(Calendar.HOUR_OF_DAY, 23);
+        cal.set(Calendar.MINUTE, 59);
+        cal.set(Calendar.SECOND, 59);
+        cal.set(Calendar.MILLISECOND, 999);
+        Date adjustedEndDate = cal.getTime();
+
+
+        List<BookACarEntity> bookings = bookACarRepository.findByCarIdAndDateRange(
+                carId,
+                (java.sql.Date) adjustedStartDate,
+                adjustedEndDate
+        );
+
+        return bookings;
     }
+}
 
 
 

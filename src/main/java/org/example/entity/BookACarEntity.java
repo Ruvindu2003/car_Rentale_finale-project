@@ -8,6 +8,7 @@ import org.example.enums.BookCarStatus;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.sql.Time;
 import java.util.Date;
 
 @Data
@@ -38,6 +39,8 @@ public class BookACarEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private CarEntity car;
+
+
 
 
     public BookACar getBookingCars(){
