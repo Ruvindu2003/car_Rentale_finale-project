@@ -79,5 +79,6 @@ public class WebSecurity {
     }
 
     public void httpFirewall(HttpFirewall httpFirewall) {
+
     }
 }
