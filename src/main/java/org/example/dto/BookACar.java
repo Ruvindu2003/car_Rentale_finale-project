@@ -2,8 +2,6 @@ package org.example.dto;
 
 import lombok.*;
 import org.example.enums.BookCarStatus;
-
-import java.sql.Time;
 import java.util.Date;
 
 @Data
@@ -22,7 +20,4 @@ public class BookACar {
     private Long userId;
     private String email;
     private String userName;
-
-
-
 }
